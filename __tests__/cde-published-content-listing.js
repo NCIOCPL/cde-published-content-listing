@@ -137,6 +137,109 @@ describe('CDEPublishedContentListing', async () => {
                 expect(actual).toEqual(expected);
             });
 
+            it('returns results at root, no dirs', async () => {
+                const scope = nock('https://www.cancer.gov')
+                .get("/PublishedContent/List")
+                .query({
+                    root: 'Root',
+                    path: '/',
+                    fmt: "json"
+                })
+                .reply(200, {
+                    Directories: [],
+                    Files: [
+                        { 
+                            FullWebPath: '/PublishedContent/Root/file-a.xml',
+                            FileName: 'file-a.xml',
+                            CreationTime: '2015-05-01T09:36:06.8698264-04:00',
+                            LastWriteTime: '2018-02-08T10:56:21.63197-05:00' 
+                        },
+                        {
+                            FullWebPath: '/PublishedContent/Root/file-b.xml',
+                            FileName: 'file-b.xml',
+                            CreationTime: '2015-05-01T15:43:20.7272344-04:00',
+                            LastWriteTime: '2018-05-10T18:10:29.8378898-04:00' 
+                        }
+                    ]
+                });
+
+                const expected = {
+                    Directories: [],
+                    Files: [
+                        { 
+                            FullWebPath: '/PublishedContent/Root/file-a.xml',
+                            Path: [],
+                            FileName: 'file-a.xml',
+                            CreationTime: '2015-05-01T09:36:06.8698264-04:00',
+                            LastWriteTime: '2018-02-08T10:56:21.63197-05:00' 
+                        },
+                        {
+                            FullWebPath: '/PublishedContent/Root/file-b.xml',
+                            Path: [],
+                            FileName: 'file-b.xml',
+                            CreationTime: '2015-05-01T15:43:20.7272344-04:00',
+                            LastWriteTime: '2018-05-10T18:10:29.8378898-04:00' 
+                        }
+                    ]
+                }            
+
+                const actual = await client.getItemsForPath('Root');
+                expect(scope.isDone()).toBeTruthy();
+                expect(actual).toEqual(expected);
+            });
+
+            it('returns results at root, no files', async () => {
+                const scope = nock('https://www.cancer.gov')
+                .get("/PublishedContent/List")
+                .query({
+                    root: 'Root',
+                    path: '/',
+                    fmt: "json"
+                })
+                .reply(200, {
+                    Directories: [
+                        'dir-a',
+                        'dir-b'
+                    ],
+                    Files: []
+                });
+
+                const expected = {
+                    Directories: [
+                        'dir-a',
+                        'dir-b'
+                    ],
+                    Files: []
+                }            
+
+                const actual = await client.getItemsForPath('Root');
+                expect(scope.isDone()).toBeTruthy();
+                expect(actual).toEqual(expected);
+            });
+            
+            it('returns results at root, no dirs, no files', async () => {
+                const scope = nock('https://www.cancer.gov')
+                .get("/PublishedContent/List")
+                .query({
+                    root: 'Root',
+                    path: '/',
+                    fmt: "json"
+                })
+                .reply(200, {
+                    Directories: [],
+                    Files: []
+                });
+
+                const expected = {
+                    Directories: [],
+                    Files: []
+                }            
+
+                const actual = await client.getItemsForPath('Root');
+                expect(scope.isDone()).toBeTruthy();
+                expect(actual).toEqual(expected);
+            });
+
             it('returns results deeper', async () => {
                 const scope = nock('https://www.cancer.gov')
                 .get("/PublishedContent/List")

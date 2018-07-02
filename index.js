@@ -55,7 +55,7 @@ class CDEPublishedContentListing {
             Directories: (res.data && res.data.Directories && res.data.Directories.length) ? 
                 res.data.Directories : 
                 [],
-            Files: (res.data && res.data.Directories && res.data.Directories.length) ? 
+            Files: (res.data && res.data.Files && res.data.Files.length) ? 
                 res.data.Files.map(
                     (f) => ({
                         FullWebPath: f.FullWebPath,

@@ -1,0 +1,37 @@
+{
+  "name": "cde-published-content-listing",
+  "version": "1.0.0",
+  "description": "Node module for the CDE Published Content Listing",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nciocpl/cde-published-content-listing.git"
+  },
+  "author": "Bryan Pizzillo",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/nciocpl/cde-published-content-listing/issues"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "index.js"
+    ]
+  },
+  "homepage": "https://github.com/nciocpl/cde-published-content-listing#readme",
+  "devDependencies": {
+    "@types/jest": "^23.1.2",
+    "@types/node": "^10.3.6",
+    "jest": "^23.2.0",
+    "nock": "^9.3.3"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "xml2js": "^0.4.19"
+  }
+}
